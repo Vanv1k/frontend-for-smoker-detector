@@ -17,3 +17,8 @@
     max-width: 640px;
     height: auto;
 }
+
+.video-container {
+    max-height: 960px;
+}
+
