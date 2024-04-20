@@ -7,6 +7,7 @@ export const MainPage = () => {
 
     const [file, setFile] = useState(null);
     const [fileUrl, setFileUrl] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const handleFileChange = (selectedFile) => {
@@ -18,7 +19,7 @@ export const MainPage = () => {
             console.log('Файл не выбран');
             return;
         }
-
+        setIsLoading(true);
         const formData = new FormData();
         formData.append('file', file);
 
@@ -32,6 +33,8 @@ export const MainPage = () => {
             setFileUrl(url);
         } catch (error) {
             console.error('Ошибка:', error);
+        } finally {
+            setIsLoading(false); 
         }
     };
 
@@ -39,7 +42,7 @@ export const MainPage = () => {
         <div className="main-container">
             <div className="input-container">
                 <InputForm onFileChange={handleFileChange}/>
-                <SendButton onClick={handleSendClick}/>
+                <SendButton onClick={handleSendClick} isLoading={isLoading}/>
             </div>
             {fileUrl && <div className='image-container'><img className='image' src={fileUrl} alt="Uploaded Image" /></div>}
         </div>
