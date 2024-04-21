@@ -51,6 +51,7 @@ export const MainPage = () => {
             console.log('Файл не выбран');
             return;
         }
+        setIsSmokerPose(false)
         setIsVideo(false);
         setIsVideoEnabled(false);
         setIsLoading(true);
