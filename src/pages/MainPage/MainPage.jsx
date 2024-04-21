@@ -11,6 +11,7 @@ export const MainPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isVideo, setIsVideo] = useState(false);
     const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+    const serverUrl = 'https://b07f-107-189-7-49.ngrok-free.app';
 
     // useEffect(() => {
     //     if (isVideoEnabled) {
@@ -36,7 +37,7 @@ export const MainPage = () => {
 
     const fetchVideo = () => {
         setIsVideo(true)
-        setFileUrl('https://b07f-107-189-7-49.ngrok-free.app/get-video/');
+        setFileUrl(`${serverUrl}/get-video/`);
     };
 
 
@@ -56,10 +57,14 @@ export const MainPage = () => {
         formData.append('file', file);
 
         try {
-            const response = await fetch('https://b07f-107-189-7-49.ngrok-free.app/upload-image/', {
+            const response = await fetch(`${serverUrl}/upload-image/`, {
                 method: 'POST',
                 body: formData
             });
+            response.headers.get('Content-type')
+            if (response.headers.get('Content-type') == 'video/mp4') {
+                setIsVideo(true);
+            }
             const blob = await response.blob();
             const url = URL.createObjectURL(blob);
             setFileUrl(url);
@@ -87,7 +92,7 @@ export const MainPage = () => {
                         <source src={fileUrl} type='video/mp4' />
                     </video>
                 </div>
-            ) : (<div className='image-container'><img className='image' src={fileUrl} alt="Uploaded Image" /></div>))}
+            ) : (<div className='image-container'><img className='image' src={fileUrl} alt="Loading..." /></div>))}
         </div>
     )
 }

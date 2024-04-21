@@ -9,7 +9,7 @@ export const InputForm = ({ onFileChange }) => {
 
     return (
         <div>
-            <h3 className='head'>Прикрепите изображение</h3>
+            <h3 className='head'>Прикрепите файл</h3>
             <input className="input-form" type="file" onChange={handleFileChange} />
         </div>
     );
