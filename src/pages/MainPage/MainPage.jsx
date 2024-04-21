@@ -36,7 +36,7 @@ export const MainPage = () => {
 
     const fetchVideo = () => {
         setIsVideo(true)
-        setFileUrl('https://9db5-107-189-7-49.ngrok-free.app/get-video/');
+        setFileUrl('https://b07f-107-189-7-49.ngrok-free.app/get-video/');
     };
 
 
@@ -50,12 +50,13 @@ export const MainPage = () => {
             return;
         }
         setIsVideo(false);
+        setIsVideoEnabled(false);
         setIsLoading(true);
         const formData = new FormData();
         formData.append('file', file);
 
         try {
-            const response = await fetch('https://9db5-107-189-7-49.ngrok-free.app/upload-image/', {
+            const response = await fetch('https://b07f-107-189-7-49.ngrok-free.app/upload-image/', {
                 method: 'POST',
                 body: formData
             });
