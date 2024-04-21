@@ -11,6 +11,7 @@ export const MainPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [isVideo, setIsVideo] = useState(false);
     const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+    const [IsSmokerPose, setIsSmokerPose] = useState(false);
     const serverUrl = 'https://b07f-107-189-7-49.ngrok-free.app';
 
     // useEffect(() => {
@@ -64,7 +65,15 @@ export const MainPage = () => {
             response.headers.get('Content-type')
             if (response.headers.get('Content-type') == 'video/mp4') {
                 setIsVideo(true);
+            } else {
+                const cigaretteExists = response.headers.get('cigarette_exists');
+                setIsSmokerPose(cigaretteExists && cigaretteExists.toLowerCase() === 'true');
             }
+            for (let [key, value] of response.headers) {
+                console.log(`${key}: ${value}`);
+              }
+            console.log(response.headers.get('cigarette_exists'))
+            console.log(response.headers.get('cigarette_exists') == 'True')
             const blob = await response.blob();
             const url = URL.createObjectURL(blob);
             setFileUrl(url);
@@ -92,7 +101,9 @@ export const MainPage = () => {
                         <source src={fileUrl} type='video/mp4' />
                     </video>
                 </div>
-            ) : (<div className='image-container'><img className='image' src={fileUrl} alt="Loading..." /></div>))}
+            ) : (<div className='image-container'><img className='image' src={fileUrl} alt="Loading..." />
+                { IsSmokerPose ? <p>Человек курит!</p> : <></>}
+                </div>))}
         </div>
     )
 }
